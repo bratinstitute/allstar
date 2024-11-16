@@ -10,7 +10,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #000000;
             font-family: Arial, sans-serif;
             text-align: center;
         }
@@ -34,16 +34,16 @@
         const renderSiteUrl = 'https://allstars.onrender.com';
 
         function checkSiteStatus() {
-            fetch(renderSiteUrl)
+            fetch(renderSiteUrl, { mode: 'no-cors' })
                 .then(response => {
-                    if (response.ok) {
+                    if (response.type === 'opaque' || response.ok) {
                         window.location.href = renderSiteUrl;
                     } else {
                         throw new Error('Site not ready');
                     }
                 })
                 .catch(() => {
-                    setTimeout(checkSiteStatus, 5000);
+                    setTimeout(checkSiteStatus, 5000); // Retry every 5 seconds
                 });
         }
 
